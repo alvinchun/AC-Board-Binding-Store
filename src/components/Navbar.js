@@ -1,11 +1,14 @@
 import React, { Component } from 'react'
 import {Link} from 'react-router-dom'
 import logo from '../logo.svg'
+import styled from 'styled-components'
+import {ButtonContainer} from './Button'
+
 export default class Navbar extends Component {
           render() {
                     return (
-                      <div>
-                        <nav className="navbar navbar-expand-sm bg-primary navbar-dark px-sm-5">
+                    //   <div>
+                        <NavWrapper className="navbar navbar-expand-sm navbar-dark px-sm-5">
                           <Link to="/">
                             <img
                               src={logo}
@@ -24,13 +27,31 @@ export default class Navbar extends Component {
                             </li>
                           </ul>
                           {/* ml-auto = margin left auto (keeps the cart button at the right) */}
-                          <Link to="/cart" className="ml-auto">
-                              <button>
-                                        <i className="fas fa-cart-plus"/> My Cart
-                              </button>
+                          <Link
+                            to="/cart"
+                            className="ml-auto"
+                          >
+                            <ButtonContainer>
+                              {/* font awesome cart icon */}
+                              <span className="mr-2">
+                                <i className="fas fa-cart-plus" />
+                              </span>
+                              my cart
+                            </ButtonContainer>
                           </Link>
-                        </nav>
-                      </div>
+                        </NavWrapper>
+                    //   </div>
                     );
           }
 }
+
+// 1 rem is 16 px
+// Boostrap uses rem for the default scale
+const NavWrapper = styled.nav`
+  background: var(--mainBlue);
+  .nav-link {
+    color: var(--mainWhite) !important;
+    font-size: 1.3rem;
+    text-transform: capitalize;
+  }
+`;
