@@ -5,16 +5,65 @@ const ProductContext = React.createContext();
 //Consumer
 class ProductProvider extends Component {
 	state = {
-		products: storeProducts,
-		detailProduct: detailProduct
+		products: [],
+		detailProduct: detailProduct,
+		cart: []
 	};
 
-	handleDetail = () => {
-		console.log("hello from detail");
+	componentDidMount() {
+		this.setProducts();
+	}
+
+	setProducts = () => {
+		let tempProducts = [];
+		storeProducts.forEach(item => {
+			const singleItem = { ...item };
+			tempProducts = [...tempProducts, singleItem];
+		});
+		this.setState(() => {
+			return { products: tempProducts };
+		});
 	};
-	addToCart = () => {
-		console.log("hello from add to cart");
+
+	getItem = id => {
+		const product = this.state.products.find(item => item.id === id);
+		return product;
 	};
+
+	handleDetail = id => {
+		const product = this.getItem(id);
+		this.setState(() => {
+			return { detailProduct: product };
+		});
+	};
+
+	addToCart = id => {
+		// `` template literals
+		let tempProducts = [...this.state.products];
+		const index = tempProducts.indexOf(this.getItem(id));
+		const product = tempProducts[index];
+		product.inCart = true;
+		product.count = 1;
+		const price = product.price;
+		product.total = price;
+	};
+	// tester = () => {
+	// 	console.log("State products :", this.state.products[0].inCart);
+	// 	console.log("Data products :", storeProducts[0].inCart);
+
+	// 	const tempProducts = [...this.state.products];
+	// 	tempProducts[0].inCart = true;
+	// 	this.setState(
+	// 		() => {
+	// 			return { products: tempProducts };
+	// 		},
+	// 		() => {
+	// 			console.log("State products :", this.state.products[0].inCart);
+	// 			console.log("Data products :", storeProducts[0].inCart);
+	// 		}
+	// 	);
+	// };
+
 	render() {
 		return (
 			// We are getting the value in an object (that's the key point of using context API to render values inside of object)
@@ -25,6 +74,7 @@ class ProductProvider extends Component {
 					addToCart: this.addToCart
 				}}
 			>
+				{/* <button onClick={this.tester}> test me </button> */}
 				{this.props.children}
 			</ProductContext.Provider>
 		);
