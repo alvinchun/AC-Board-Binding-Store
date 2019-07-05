@@ -7,7 +7,12 @@ class ProductProvider extends Component {
 	state = {
 		products: [],
 		detailProduct: detailProduct,
-		cart: []
+		cart: storeProducts,
+		modalOpen: false,
+		modalProduct: detailProduct,
+		cartSubTotal: 0,
+		cartTax: 0,
+		cartTotal: 0
 	};
 
 	componentDidMount() {
@@ -46,6 +51,14 @@ class ProductProvider extends Component {
 		product.count = 1;
 		const price = product.price;
 		product.total = price;
+		this.setState(
+			() => {
+				return { products: tempProducts, cart: [...this.state.cart, product] };
+			},
+			() => {
+				console.log(this.state);
+			}
+		);
 	};
 	// tester = () => {
 	// 	console.log("State products :", this.state.products[0].inCart);
@@ -64,6 +77,39 @@ class ProductProvider extends Component {
 	// 	);
 	// };
 
+	openModal = id => {
+		const product = this.getItem(id);
+		this.setState(() => {
+			return { modalProduct: product, modalOpen: true };
+		});
+	};
+
+	closeModal = () => {
+		this.setState(() => {
+			return { modalOpen: false };
+		});
+	};
+
+	increment = id => {
+		console.log("this is increment method");
+	};
+
+	decrement = id => {
+		console.log("this is decrement method");
+	};
+
+	removeItem = id => {
+		console.log("item removed");
+	};
+
+	removeItem = id => {
+		console.log("cart was cleared");
+	};
+
+	clearCart = id => {
+		console.log("cart was cleared");
+	};
+
 	render() {
 		return (
 			// We are getting the value in an object (that's the key point of using context API to render values inside of object)
@@ -71,7 +117,13 @@ class ProductProvider extends Component {
 				value={{
 					...this.state,
 					handleDetail: this.handleDetail,
-					addToCart: this.addToCart
+					addToCart: this.addToCart,
+					openModal: this.openModal,
+					closeModal: this.closeModal,
+					increment: this.increment,
+					decrement: this.decrement,
+					removeItem: this.removeItem,
+					clearCart: this.clearCart
 				}}
 			>
 				{/* <button onClick={this.tester}> test me </button> */}
