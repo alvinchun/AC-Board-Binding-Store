@@ -1,6 +1,6 @@
-import React, { Component } from "react";
+import React, { Component, createContext } from "react";
 import { storeProducts, detailProduct } from "./data";
-const ProductContext = React.createContext();
+const ProductContext = createContext();
 //Provider
 //Consumer
 class ProductProvider extends Component {
@@ -174,8 +174,8 @@ class ProductProvider extends Component {
 
 	addTotals = () => {
 		let subTotal = 0;
-		this.state.cart.map(item => {
-			subTotal += item.total;
+		this.state.cart.map((item) => {
+			return subTotal += item.total;
 		});
 
 		const tempTax = subTotal * 0.1;
