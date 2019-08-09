@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { ProductConsumer } from "../context";
 import { Link } from "react-router-dom";
 import { ButtonContainer } from "./Button";
+import { Button } from "semantic-ui-react";
+
 
 export default class Details extends Component {
 	render() {
@@ -50,9 +52,9 @@ export default class Details extends Component {
 									{/* buttons */}
 									<div>
 										<Link to="/">
-											<ButtonContainer>back to products</ButtonContainer>
+											<Button>back to products</Button>
 										</Link>
-										<ButtonContainer
+										<Button color='green'
 											cart
 											disabled={inCart ? true : false}
 											onClick={() => {
@@ -61,7 +63,7 @@ export default class Details extends Component {
 											}}
 										>
 											{inCart ? "inCart" : "Add to Cart"}
-										</ButtonContainer>
+										</Button>
 									</div>
 								</div>
 							</div>
