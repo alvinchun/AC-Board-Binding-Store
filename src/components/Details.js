@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { ProductConsumer } from "../context";
 import { Link } from "react-router-dom";
-import { ButtonContainer } from "./Button";
 import { Button } from "semantic-ui-react";
 
 

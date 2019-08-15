@@ -1,0 +1,56 @@
+.navigation-bar {
+  background: var(--mainBlue);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  height: 120px;
+}
+
+.navbar-left {
+  width: 70%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.nav-link {
+  color: var(--mainWhite) !important;
+  font-size: 40px;
+
+  height: 100%;
+}
+
+.navbar-right {
+  width: 6%;
+  height: 100%;
+  margin-right: -3%;
+  display: flex;
+  align-items: center;
+  margin-right: 10%;
+}
+
+.navbar-logo {
+  width: 10%;
+  height: 100%;
+  margin-left: 20px;
+}
+
+.logo-size {
+  width: 50px;
+  height: 80px;
+}
+
+.nav-title {
+  height: 100%;
+  width: 120%;
+  display: flex;
+  flex-direction: flex-start;
+}
+
+.cart-button {
+  width: 120px;
+  height: 50px;
+  font-size: 300px;
+}
