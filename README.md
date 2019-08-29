@@ -32,40 +32,11 @@ This command will generate all the boiler plate of react application
 
 ![main-page](./public/img/portfolio-images/main-page.jpg)
 ![single-page](./public/img/portfolio-images/single-page.jpg)
-![single-page-modal-pop-up](./public/img/portfolio-images/single-page-modal-pop-up.jpg)
-![authentication-page](./public/img/portfolio-images/authentication-page.jpg)
+![single-page-modal-pop-up](./public/img/portfolio-images/single-page-modal-popup.jpg)
+![authentication-page](./public/img/portfolio-images/authentication-page.png)
 ![in-cart-page](./public/img/portfolio-images/in-cart-page.png)
 ![paypal-checkout-page](./public/img/portfolio-images/paypal-checkout-page.png)
 
-We can run to generate models by running:
-
-`$ rails generate model Play title:string description:text director:string`
-
-`$ rails generate model Review rating:integer comment:text`
-
-`$ rails generate model Category name:string`
-
-and we can generate migration files as following the relations by running:
-
-`$ rails generate migration ...`
-
-And then migration those migration files in to schema.rb by running
-
-`$ rails db:migrate`
-
-We can create controller by running:
-
-`$ rails generate controller Movies`
-
-The controller where we can control our model and view to create CRUD functionalities.
-
-`Create: new, create Read: show, index Update: edit, update Delete: destroy`
-
-These methods can be used to generate each CRUD functionalities.
-
-And same for CRUD functionalities with reviews as well. You can find more details in the app/controllers repository.
-
-![MVC-image](./public/image/MVC-pattern.png)
 
 ## Models relations
 
