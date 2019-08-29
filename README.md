@@ -1,69 +1,135 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# AC REACT STORE
 
-## Available Scripts
+Link: https://ac-ecommerce-store.netlify.com
 
-In the project directory, you can run:
+## Challenge
 
-### `npm start`
+E-commerce Platform CRUD app for users to see the items information and add to cart to make payment with each authenticated users.
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Technologies
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+- React.js
+- Context API
+- Semantic UI React
+- Styled Components
+- CSS3
+- Paypal
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Included Features
 
-### `npm run build`
+- User can log in with firbase authentication provided by Google.
+- All users can view all listed items page in home directory, single item page, but only the authenticated users can add items to the cart and check out.
+- Authenticated users can add items to the cart from the all items view pages (hompage) by hovering over the image to click on the cart icon fading in.
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Ruby on Rails setup
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+`$ create-react-app ac-react-store`
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+This command will generate all the boiler plate of react application
 
-### `npm run eject`
+## CRUD Movies Algorithm
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+![main-page](./public/img/portfolio-images/main-page.jpg)
+![single-page](./public/img/portfolio-images/single-page.jpg)
+![single-page-modal-pop-up](./public/img/portfolio-images/single-page-modal-pop-up.jpg)
+![authentication-page](./public/img/portfolio-images/authentication-page.jpg)
+![in-cart-page](./public/img/portfolio-images/in-cart-page.png)
+![paypal-checkout-page](./public/img/portfolio-images/paypal-checkout-page.png)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+We can run to generate models by running:
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+`$ rails generate model Play title:string description:text director:string`
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+`$ rails generate model Review rating:integer comment:text`
 
-## Learn More
+`$ rails generate model Category name:string`
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+and we can generate migration files as following the relations by running:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+`$ rails generate migration ...`
 
-### Code Splitting
+And then migration those migration files in to schema.rb by running
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+`$ rails db:migrate`
 
-### Analyzing the Bundle Size
+We can create controller by running:
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+`$ rails generate controller Movies`
 
-### Making a Progressive Web App
+The controller where we can control our model and view to create CRUD functionalities.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+`Create: new, create Read: show, index Update: edit, update Delete: destroy`
 
-### Advanced Configuration
+These methods can be used to generate each CRUD functionalities.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+And same for CRUD functionalities with reviews as well. You can find more details in the app/controllers repository.
 
-### Deployment
+![MVC-image](./public/image/MVC-pattern.png)
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+## Models relations
 
-### `npm run build` fails to minify
+Play belongs to user and category and has many reviews
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
-# AC-ecommerce-store
+```ruby
+class Play < ApplicationRecord
+	belongs_to :user
+	belongs_to :category
+	has_many :reviews
+end
+```
+
+Review belongs to play and user
+
+```ruby
+class Review < ApplicationRecord
+	belongs_to :play
+	belongs_to :user
+end
+```
+
+Category has many plays
+
+```ruby
+class Category < ApplicationRecord
+	has_many :plays
+end
+```
+
+## Authentication set up
+
+As following the documentation from devise github:
+
+we can run
+
+`$ rails generate devise:install`
+
+`$ rails generate devise User`
+
+`$ rails db:migrate`
+
+would add devise methods as below, and we can also add relations to plays and reviews.
+
+```ruby
+class User < ApplicationRecord
+	has_many :plays
+	has_many :reviews
+	# Include default devise modules. Others available are:
+	# :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+	devise :database_authenticatable,
+	       :registerable,
+	       :recoverable,
+	       :rememberable,
+	       :validatable
+end
+```
+
+And with devise gem setup, setting User model has many plays and reviews in User.rb file.
+
+## Problems
+
+![heroku-dyno-problem](./public/image/images-rendering-errors-heroku.png)
+
+Uploading images directly from public/images file to heroku didn't work. On heroku, each dyno gets its own ephemeral filesystem, with a fresh copy of the most recently deployed code. During the dyno’s lifetime its running processes can use the filesystem as a temporary scratchpad, but no files that are written are visible to processes in any other dyno and any files written will be discarded the moment the dyno is stopped or restarted. so I decided to use AWS S3 for the cloud storage where I can keep the image even though the dyno on heroku restarts.
+
+## Test Driven Development:
